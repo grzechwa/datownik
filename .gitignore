@@ -1,0 +1,6 @@
+# plik ignorancji dla folderu datownik
+bin
+.classpath
+.project
+.settings
+*.java
