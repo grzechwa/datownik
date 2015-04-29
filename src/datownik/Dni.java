@@ -12,19 +12,18 @@ import java.util.List;
 public class Dni {
 
 	public static void main(String[] args) {
-	
+		// zmienne na formatowanie dat
 		SimpleDateFormat sdf = new SimpleDateFormat("dd.M.yyyy");
 		SimpleDateFormat sdfDay = new SimpleDateFormat("EEEE");
 
 		Calendar calendar = new GregorianCalendar();
-
         Clipboard c = Toolkit.getDefaultToolkit().getSystemClipboard();
 		StringSelection testData;
 		List<String> list = new ArrayList<String>();
 		
 		// Dni swiateczne umieszone w tablicy + pierwszy przypadek testowy
         Calendar[] swieta = new GregorianCalendar[15];
-		swieta[0] = new GregorianCalendar(2015, 3, 29);
+		swieta[0] = new GregorianCalendar(2015, 0, 1);
 		swieta[1] = new GregorianCalendar(2015, 0, 6);
 		swieta[2] = new GregorianCalendar(2015, 4, 1);
 		swieta[3] = new GregorianCalendar(2015, 4, 3);
@@ -85,9 +84,8 @@ public class Dni {
 		StringBuilder sb = new StringBuilder();
 		Collections.reverse(list);
 
-		for(String s : list){
+		for(String s : list)
 			sb.insert(0, s);
-		}
 		
 		System.out.println(sb);
 		testData = new StringSelection(sb.toString());
@@ -95,14 +93,12 @@ public class Dni {
 		c.setContents(testData, testData);
 	}
 	
-	
 	// http://www.elektroda.pl/rtvforum/topic1244944.html
 	public static int daysInMonth(GregorianCalendar c) {
         final int [] daysInMonths = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
         daysInMonths[1] += c.isLeapYear(c.get(GregorianCalendar.YEAR)) ? 1 : 0;
         return daysInMonths[c.get(GregorianCalendar.MONTH)];
    } 
-	
 	
 	// wielkanoc itp
 	public static Calendar wielka(GregorianCalendar rok){
