@@ -4,30 +4,23 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Locale;
-
-import javax.jws.soap.SOAPBinding.Style;
 
 public class Dni {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+	
 		SimpleDateFormat sdf = new SimpleDateFormat("dd.M.yyyy");
 		SimpleDateFormat sdfDay = new SimpleDateFormat("EEEE");
 
-		String date = sdf.format(new Date());
-		Locale locale = new Locale("pl-PL");
 		Calendar calendar = new GregorianCalendar();
 
         Clipboard c = Toolkit.getDefaultToolkit().getSystemClipboard();
 		StringSelection testData;
-		List<String> list = new ArrayList();
+		List<String> list = new ArrayList<String>();
 		
 		// Dni swiateczne umieszone w tablicy + pierwszy przypadek testowy
         Calendar[] swieta = new GregorianCalendar[15];
@@ -46,10 +39,12 @@ public class Dni {
 		
 		// zmienne do ustawiania dnia miesiaca w petli for + 
 		// ustawinie poczatkowego dnia
-        int dzien = 1;
-        int mies = calendar.get(calendar.MONTH)+2;
-        int rok = calendar.get(Calendar.YEAR);
+		// TODO: dodac przesuniecie daty
+        int dzien 	= 1;
+        int mies 	= calendar.get(Calendar.MONTH);
+        int rok 	= calendar.get(Calendar.YEAR);
 
+        // inicjalizacja kalendarze do przetwarzania
         calendar.set(rok, mies, 1);
 
 		for(int i = 1; i <= daysInMonth((GregorianCalendar)calendar); i++){
@@ -65,7 +60,7 @@ public class Dni {
 			String res = sdfDay.format(calendar.getTime());
 			
 			// Dodaje do listy dni bez weekendow
-			// TODO: dodac wyjatki zwiazane z wielkanoca
+			// TODO: skrocic zapis
 			if(!(res.equals("niedziela") || 
 					res.equals("sobota") ||
 					sdf.format(calendar.getTime()).toString().equals(sdf.format(swieta[0].getTime()).toString()) ||
@@ -98,22 +93,6 @@ public class Dni {
 		testData = new StringSelection(sb.toString());
 		// doaje do shcowaka
 		c.setContents(testData, testData);
-		
-		// System.out.println("---------" + wielka((GregorianCalendar)calendar));
-		wielka((GregorianCalendar)calendar);
-		
-		
-
-		
-		
-		
-		
-		/*
-		if(data+60 > 31)
-			System.out.println(data%31 + " czerwca");
-		else
-			System.out.println(data + " marca");
-			*/
 	}
 	
 	
@@ -140,33 +119,22 @@ public class Dni {
 		   (d == 28 && e == 6 )){ d -= 7;}
 		
 		GregorianCalendar wlk = new GregorianCalendar(2015, 5, 1);
-		System.out.print("Wielkanoc przypada: ");
-		
+
 		int data = 22 + d + e;
+		// TODO: skrocic zapis
 		if(data > 31){
-			System.out.println(data%31 + " kwietnia");
 			wlk.set(rok.get(Calendar.YEAR),3, data%31);
 		}
 		else{
-			System.out.println(data + " marca");
 			wlk.set(rok.get(Calendar.YEAR), 2, data);
 		}
+
 		SimpleDateFormat sss = new SimpleDateFormat("dd.M.yyyy");
-		
-		System.out.print("BozeCialo przypada: ");
 		// przesuwam o jeden dzien, bo niedziela i tak jest wolna
 		// daltego zamiast 60 jest 59
 		wlk.add(Calendar.DAY_OF_YEAR, 1);
-			System.out.println(sss.format(wlk.getTime()));
 		wlk.add(Calendar.DAY_OF_YEAR, 59);
-			System.out.println(sss.format(wlk.getTime()));
 		wlk.add(Calendar.DAY_OF_YEAR, -59);
-			return wlk;
+        return wlk;
 	}
 }
-	
-	
-	
-	
-	
-

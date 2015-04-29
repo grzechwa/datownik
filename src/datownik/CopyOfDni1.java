@@ -11,7 +11,14 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.jws.soap.SOAPBinding.Style;
-
+/*
+ * 
+<<<<<<< HEAD
+ * sssssasssssss
+=======
+ * sssssasss
+>>>>>>> parent of 6fae1ec... 004-chybaaa ok
+ */
 public class CopyOfDni1 {
 
 	public static void main(String[] args) {

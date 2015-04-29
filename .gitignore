@@ -1,6 +1,7 @@
 # plik ignorancji dla folderu datownik
-bin
+bin/
+src/datownik/Copy*.java
+!Dni.java
 .classpath
 .project
 .settings
-*.java
