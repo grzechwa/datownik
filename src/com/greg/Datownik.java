@@ -22,7 +22,7 @@ public class Datownik {
         StringSelection testData;
         List<String> list = new ArrayList<String>();
 
-        // Dni swiateczne umieszone w tablicy + pierwszy przypadek testowy
+        // Dni swiateczne umonthzone w tablicy + pierwszy przypadek testowy
         Calendar[] swieta = new GregorianCalendar[15];
         swieta[0] = new GregorianCalendar(2016, 0, 1);
         swieta[1] = new GregorianCalendar(2016, 0, 6);
@@ -37,24 +37,30 @@ public class Datownik {
         swieta[10] = easter((GregorianCalendar)calendar);
         swieta[10].add(Calendar.DAY_OF_YEAR, 59);
 
-        // zmienne do ustawiania dnia miesiaca w petli for +
+        // zmienne do ustawiania dnia monthiaca w petli for +
         // ustawinie poczatkowego dnia
         // TODO: dodac przesuniecie daty
-        int dzien 	= 1;
-        int mies 	= calendar.get(Calendar.MONTH);
-        int rok 	= calendar.get(Calendar.YEAR);
+        int day = 1;
+
+        if (args.length == 0) day = 1;
+        else if (args.length == 1
+                && String.valueOf(args[0]).matches("[0-9]+"))
+        day = Integer.parseInt(args[0]);
+
+        int month 	= calendar.get(Calendar.MONTH);
+        int year 	= calendar.get(Calendar.YEAR);
 
         // inicjalizacja kalendarze do przetwarzania
-        calendar.set(rok, mies, 1);
+        calendar.set(year, month, 1);
 
-        for(int i = 1; i <= daysInMonth((GregorianCalendar)calendar); i++){
+        for(int i = day; i <= daysInMonth((GregorianCalendar)calendar); i++){
 
             // Ustawiam kalendarz, z ktorego bede korzystal
             // TODO: zautomatyzowac ustawianie kalendarza
-            calendar.set(rok, mies, i);
+            calendar.set(year, month, i);
 
             // Przygotowuje wlasny format daty do zapisu w liscie
-            dzien = calendar.get(calendar.DAY_OF_MONTH);
+            day = calendar.get(calendar.DAY_OF_MONTH);
 
             // Potrzebna nazwa dnia, do usuniecia go z "kalendarza"
             String res = sdfDay.format(calendar.getTime());
@@ -76,7 +82,7 @@ public class Datownik {
                     sdf.format(calendar.getTime()).toString().equals(sdf.format(swieta[10].getTime()).toString())
             )) {
 
-                String myKal = String.valueOf(dzien) + "-" + String.valueOf(mies+1) + "-" + String.valueOf(rok);
+                String myKal = String.valueOf(day) + "-" + String.valueOf(month+1) + "-" + String.valueOf(year);
                 list.add(myKal +"\n");
 
             }
@@ -102,11 +108,11 @@ public class Datownik {
     }
 
     // easternoc itp
-    public static Calendar easter(GregorianCalendar rok){
+    public static Calendar easter(GregorianCalendar year){
         int a,b,c,d,e;
-        a = rok.get(Calendar.YEAR) % 19;
-        b = rok.get(Calendar.YEAR) % 4;
-        c = rok.get(Calendar.YEAR) % 7;
+        a = year.get(Calendar.YEAR) % 19;
+        b = year.get(Calendar.YEAR) % 4;
+        c = year.get(Calendar.YEAR) % 7;
 
         d = (a * 19 + 24) % 30;
         e = (2 * b + 4 * c + 6 * d + 5) % 7;
@@ -120,15 +126,15 @@ public class Datownik {
         int data = 22 + d + e;
         // TODO: skrocic zapis
         if(data > 31){
-            wlk.set(rok.get(Calendar.YEAR),3, data%31);
+            wlk.set(year.get(Calendar.YEAR),3, data%31);
         }
         else{
-            wlk.set(rok.get(Calendar.YEAR), 2, data);
+            wlk.set(year.get(Calendar.YEAR), 2, data);
         }
 
         SimpleDateFormat sss = new SimpleDateFormat("dd.M.yyyy");
-        // przesuwam o jeden dzien, bo niedziela i tak jest wolna
-        // daltego zamiast 60 jest 59
+        // przesuwam o jeden day, bo niedziela i tak jest wolna
+        // dlatego zamiast 60 jest 59
         wlk.add(Calendar.DAY_OF_YEAR, 1);
         wlk.add(Calendar.DAY_OF_YEAR, 59);
         wlk.add(Calendar.DAY_OF_YEAR, -59);
